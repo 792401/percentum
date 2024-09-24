@@ -1,71 +1,95 @@
-import React, { useState, useEffect } from 'react';
-import './App.css';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import './App.css'; // Ensure this file is imported
 
 interface HistoryItem {
   question: string;
-  userAnswer: string;
   correctAnswer: string;
-  isCorrect: boolean;
 }
 
 const App: React.FC = () => {
   const [percentage, setPercentage] = useState<number>(0);
   const [total, setTotal] = useState<number>(0);
-  const [userAnswer, setUserAnswer] = useState<string>('');
-  const [inputClass, setInputClass] = useState<string>(''); // For input highlighting
+  const [inputData, setInputData] = useState<{ userAnswer: string; inputClass: string }>({
+    userAnswer: '',
+    inputClass: '',
+  });
   const [history, setHistory] = useState<HistoryItem[]>([]);
 
-  // Settings state
-  const [numberRange, setNumberRange] = useState<{ min: number; max: number }>({ min: 100, max: 500 });
+  const [numberRange, setNumberRange] = useState<{ min: string; max: string }>({ min: '0', max: '100' });
   const [percentageType, setPercentageType] = useState<number[]>([3, 5, 10]);
 
-  const generateProblem = () => {
+  const correctAnswer = useMemo(() => (percentage / 100) * total, [percentage, total]);
+
+  const generateProblem = useCallback(() => {
     let newPercentage: number;
     let newTotal: number;
-    let correctAnswer: number;
+    let answer: number;
+    const min = parseInt(numberRange.min, 10) || 0;
+    const max = parseInt(numberRange.max, 10) || 100;
+
+    const validPercentageType = percentageType.length > 0 ? percentageType : Array.from({ length: 100 }, (_, i) => i + 1);
 
     do {
-      newPercentage = percentageType[Math.floor(Math.random() * percentageType.length)];
-      newTotal = Math.floor(Math.random() * (numberRange.max - numberRange.min + 1)) + numberRange.min;
-      correctAnswer = (newPercentage / 100) * newTotal;
-    } while (correctAnswer % 1 !== 0);
+      newPercentage = validPercentageType[Math.floor(Math.random() * validPercentageType.length)];
+      newTotal = Math.floor(Math.random() * (max - min + 1)) + min;
+      answer = (newPercentage / 100) * newTotal;
+    } while (answer % 1 !== 0 && max > min);
 
     setPercentage(newPercentage);
     setTotal(newTotal);
-    setUserAnswer('');
-    setInputClass(''); // Reset input class
-  };
+    setInputData({ userAnswer: '', inputClass: '' });
+  }, [percentageType, numberRange]);
 
-  const checkAnswer = () => {
-    const correctAnswer = (percentage / 100) * total;
-    const userAnswerNum = parseFloat(userAnswer);
+  const checkAnswer = useCallback(() => {
+    const userAnswerNum = parseFloat(inputData.userAnswer);
 
     const newHistoryItem: HistoryItem = {
-      question: `${percentage}% of ${total}`,
-      userAnswer,
+      question: `${percentage}% * ${total}`,
       correctAnswer: correctAnswer.toFixed(0),
-      isCorrect: userAnswerNum === correctAnswer,
     };
 
-    setHistory([newHistoryItem, ...history]);
-
     if (userAnswerNum === correctAnswer) {
-      setInputClass(''); // Remove red border if correct
-      setTimeout(generateProblem, 500); // Move to next question
+      setHistory((prevHistory) => [newHistoryItem, ...prevHistory]);
+      setInputData({ userAnswer: '', inputClass: '' });
+      setTimeout(generateProblem, 500);
     } else {
-      setInputClass('error'); // Highlight input in red
+      setInputData((prev) => ({ ...prev, inputClass: 'error' }));
+    }
+  }, [correctAnswer, inputData.userAnswer, percentage, total, generateProblem]);
+
+  const handleUserAnswerChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    // Only allow positive numbers in the result field
+    if (/^\d*\.?\d*$/.test(value) || value === '') {
+      setInputData({ userAnswer: value, inputClass: '' });
     }
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
+      e.preventDefault();
       checkAnswer();
     }
   };
 
+  const handleRangeChange = (side: 'min' | 'max', value: string) => {
+    if (/^\d*$/.test(value)) {
+      setNumberRange((prevRange) => ({
+        ...prevRange,
+        [side]: value === '' ? '' : value,
+      }));
+    }
+  };
+
+  const handleCheckboxChange = (value: number) => {
+    setPercentageType((prev) =>
+      prev.includes(value) ? prev.filter((type) => type !== value) : [...prev, value]
+    );
+  };
+
   useEffect(() => {
     generateProblem();
-  }, [percentageType, numberRange]);
+  }, [generateProblem]);
 
   return (
     <div className="App">
@@ -73,69 +97,59 @@ const App: React.FC = () => {
 
       {/* Settings for Number Range */}
       <div>
-        <label>Number Range: </label>
+        <label>Range</label>
         <input
           type="number"
           value={numberRange.min}
-          onChange={(e) => setNumberRange({ ...numberRange, min: parseInt(e.target.value) })}
+          onChange={(e) => handleRangeChange('min', e.target.value)}
+          placeholder="min"
+          className="input-range"
         />
         <span> - </span>
         <input
           type="number"
           value={numberRange.max}
-          onChange={(e) => setNumberRange({ ...numberRange, max: parseInt(e.target.value) })}
+          onChange={(e) => handleRangeChange('max', e.target.value)}
+          placeholder="max"
+          className="input-range"
         />
       </div>
 
       {/* Settings for Percentage Types */}
       <div>
-        <label>Select Percentage Types: </label>
-        <label>
-          <input
-            type="checkbox"
-            checked={percentageType.includes(3)}
-            onChange={() => setPercentageType(percentageType.includes(3) ? percentageType.filter(p => p !== 3) : [...percentageType, 3])}
-          />
-          Multiples of 3
-        </label>
-        <label>
-          <input
-            type="checkbox"
-            checked={percentageType.includes(5)}
-            onChange={() => setPercentageType(percentageType.includes(5) ? percentageType.filter(p => p !== 5) : [...percentageType, 5])}
-          />
-          Multiples of 5
-        </label>
-        <label>
-          <input
-            type="checkbox"
-            checked={percentageType.includes(10)}
-            onChange={() => setPercentageType(percentageType.includes(10) ? percentageType.filter(p => p !== 10) : [...percentageType, 10])}
-          />
-          Multiples of 10
-        </label>
+        {/* <label>Select Percentage Types: </label> */}
+        {[3, 5, 10].map((p) => (
+          <label key={p}>
+            <input
+              type="checkbox"
+              checked={percentageType.includes(p)}
+              onChange={() => handleCheckboxChange(p)}
+            />
+            Multiples of {p}
+          </label>
+        ))}
       </div>
 
       {/* Question Section */}
       <p>{percentage}% of {total}</p>
       <input
-        type="number"
-        placeholder="Enter your answer"
-        value={userAnswer}
-        onChange={(e) => setUserAnswer(e.target.value)}
-        onKeyDown={handleKeyDown} // Handle Enter key
-        className={inputClass}
+        type="text"
+        placeholder="Result"
+        value={inputData.userAnswer}
+        onChange={handleUserAnswerChange}
+        onKeyDown={handleKeyDown}
+        className={`input-range result-input ${inputData.inputClass}`}
       />
 
-      {/* History Section */}
+      {/* History Section
       <h2>History</h2>
       <ul>
         {history.map((item, index) => (
           <li key={index}>
-            {item.question} - Your Answer: {item.userAnswer}, Correct Answer: {item.correctAnswer} ({item.isCorrect ? 'Correct' : 'Wrong'})
+            {item.question} = {item.correctAnswer}
           </li>
         ))}
-      </ul>
+      </ul> */}
     </div>
   );
 };
