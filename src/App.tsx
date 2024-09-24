@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import './App.css'; // Ensure this file is imported
 
-interface HistoryItem {
-  question: string;
-  correctAnswer: string;
-}
+// interface HistoryItem {
+//   question: string;
+//   correctAnswer: string;
+// }
 
 const App: React.FC = () => {
   const [percentage, setPercentage] = useState<number>(0);
@@ -13,7 +13,7 @@ const App: React.FC = () => {
     userAnswer: '',
     inputClass: '',
   });
-  const [history, setHistory] = useState<HistoryItem[]>([]);
+  // const [history, setHistory] = useState<HistoryItem[]>([]);
 
   const [numberRange, setNumberRange] = useState<{ min: string; max: string }>({ min: '0', max: '100' });
   const [percentageType, setPercentageType] = useState<number[]>([3, 5, 10]);
@@ -43,13 +43,13 @@ const App: React.FC = () => {
   const checkAnswer = useCallback(() => {
     const userAnswerNum = parseFloat(inputData.userAnswer);
 
-    const newHistoryItem: HistoryItem = {
-      question: `${percentage}% * ${total}`,
-      correctAnswer: correctAnswer.toFixed(0),
-    };
+    // const newHistoryItem: HistoryItem = {
+    //   question: `${percentage}% * ${total}`,
+    //   correctAnswer: correctAnswer.toFixed(0),
+    // };
 
     if (userAnswerNum === correctAnswer) {
-      setHistory((prevHistory) => [newHistoryItem, ...prevHistory]);
+      // setHistory((prevHistory) => [newHistoryItem, ...prevHistory]);
       setInputData({ userAnswer: '', inputClass: '' });
       setTimeout(generateProblem, 500);
     } else {
