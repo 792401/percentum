@@ -17,7 +17,7 @@ const SettingsContext = createContext<SettingsContextType | undefined>(undefined
 export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [min, setMin] = useState<number>(0);
   const [max, setMax] = useState<number>(100);
-  const [percentageType, setPercentageType] = useState<number[]>([3, 5, 10]);
+  const [percentageType, setPercentageType] = useState<number[]>([]);
 
   const togglePercentageType = (value: number) => {
     setPercentageType((prev) =>

@@ -1,11 +1,10 @@
-import { BrowserRouter as Router, Route, Routes, useNavigate } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import './App.css';
-import React, { useState } from 'react';
+import React from 'react';
 import './App.css';
 import Percentage from './pages/Percentage';
-import Home from './pages/Home';
 import About from './pages/About';
-import Sidebar from './components/Sidebar';
+
 
 import Settings from './pages/Settings';
 import SessionStats from './pages/SessionStats';

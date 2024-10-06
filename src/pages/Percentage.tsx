@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSettings } from '../context/settingsContext';
-import { useHistory } from '../context/HistoryContext'; 
+import { useHistory } from '../context/HistoryContext';
 
 const Percentage: React.FC = () => {
   const { min, max, percentageType } = useSettings();
-  const { addHistoryItem } = useHistory();  // Use the history context
+  const { addHistoryItem } = useHistory();
 
   const [percentage, setPercentage] = useState<number>(0);
   const [total, setTotal] = useState<number>(0);
