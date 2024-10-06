@@ -61,3 +61,29 @@ li {
   font-size: 1.1em;
   color: #eee;
 }
+
+.app-container {
+  display: flex;
+  height: 100vh;
+}
+
+.sidebar {
+  width: 200px;
+  background-color: #333;
+  color: white;
+  height: 100vh;
+  padding: 20px;
+  position: fixed; /* Fix the sidebar to stay in place */
+  left: 0;
+  top: 0;
+  bottom: 0;
+}
+
+.main-content {
+  flex-grow: 1;
+  padding: 20px;
+  margin-left: 200px; /* This allows the content to start right after the sidebar */
+  background-color: #f4f4f4;
+  height: 100vh;
+  overflow-y: auto; /* In case content overflows, it will scroll */
+}
