@@ -4,6 +4,7 @@ import React from 'react';
 import './App.css';
 import Percentage from './pages/Percentage';
 import About from './pages/About';
+// import Sidebar from './components/Sidebar';
 
 
 import Settings from './pages/Settings';

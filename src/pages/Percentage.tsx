@@ -65,10 +65,6 @@ const Percentage: React.FC = () => {
       } else {
         setInputData((prev) => ({ ...prev, inputClass: 'error' }));
         addHistoryItem(newHistoryItem);
-
-        setTimeout(() => {
-          setInputData((prev) => ({ ...prev, userAnswer: '', inputClass: '' }));
-        }, 300);
       }
     }
   }, [correctAnswer, percentage, total, generateProblem, addHistoryItem]);
