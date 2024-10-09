@@ -4,10 +4,24 @@ import { useSettings } from '../context/settingsContext';
 import { useHistory } from '../context/HistoryContext';
 
 const Settings: React.FC = () => {
-  const {clearHistory} = useHistory();
-  const { setMin, setMax, setPlayTime, percentageType, togglePercentageType } = useSettings();
+  const { clearHistory } = useHistory();
+  const {
+    setMin,
+    setMax,
+    setPlayTime,
+    additionEnabled,
+    setAdditionEnabled,
+    subtractionEnabled,
+    setSubtractionEnabled,
+    multiplicationEnabled,
+    setMultiplicationEnabled,
+    divisionEnabled,
+    setDivisionEnabled,
+    percentagesEnabled,
+    setPercentagesEnabled,
+  } = useSettings();
   const [numberRange, setNumberRange] = useState<{ min: string; max: string }>({ min: '0', max: '100' });
-  const [selectedPlayTime, setSelectedPlayTime] = useState<string>('0');
+  const [selectedPlayTime, setSelectedPlayTime] = useState<string>('1');
   const navigate = useNavigate();
 
   const handleStart = () => {
@@ -33,9 +47,9 @@ const Settings: React.FC = () => {
 
   return (
     <div>
-      <h1>Settings</h1>
+      {/* <h1>Settings</h1> */}
       <div>
-        <label>Number Range</label>
+        <label>Range</label>
         <input
           type="number"
           value={numberRange.min}
@@ -56,27 +70,73 @@ const Settings: React.FC = () => {
       <div>
         <label>Time</label>
         <select value={selectedPlayTime} onChange={(e) => handleTimeChange(e.target.value)} className="input-time">
-        <option value="0">No time</option>
           <option value="1">1 minute</option>
           <option value="3">3 minutes</option>
           <option value="5">5 minutes</option>
-          <option value="10">10 minutes</option>
+          <option value="0">No pressure 🐢</option>
         </select>
       </div>
 
       <div>
-        <label>Only include:</label>
-        {[3,5,10].map((p) => (
-          <label key={p}>
+        {/* <label>Operations</label> */}
+        <div className="switch-container">
+          <span className="switch-label">Addition</span>
+          <label className="switch">
             <input
               type="checkbox"
-              checked={percentageType.includes(p)}
-              onChange={() => togglePercentageType(p)}
-            />Multiples of {p}
+              checked={additionEnabled}
+              onChange={() => setAdditionEnabled(!additionEnabled)}
+            />
+            <span className="slider round"></span>
           </label>
-        ))}
+        </div>
+        <div className="switch-container">
+          <span className="switch-label">Subtraction</span>
+          <label className="switch">
+            <input
+              type="checkbox"
+              checked={subtractionEnabled}
+              onChange={() => setSubtractionEnabled(!subtractionEnabled)}
+            />
+            <span className="slider round"></span>
+          </label>
+        </div>
+        <div className="switch-container">
+          <span className="switch-label">Multiplication</span>
+          <label className="switch">
+            <input
+              type="checkbox"
+              checked={multiplicationEnabled}
+              onChange={() => setMultiplicationEnabled(!multiplicationEnabled)}
+            />
+            <span className="slider round"></span>
+          </label>
+        </div>
+        <div className="switch-container">
+          <span className="switch-label">Division</span>
+          <label className="switch">
+            <input
+              type="checkbox"
+              checked={divisionEnabled}
+              onChange={() => setDivisionEnabled(!divisionEnabled)}
+            />
+            <span className="slider round"></span>
+          </label>
+        </div>
+        <div className="switch-container">
+          <span className="switch-label">Percentages</span>
+          <label className="switch">
+            <input
+              type="checkbox"
+              checked={percentagesEnabled}
+              onChange={() => setPercentagesEnabled(!percentagesEnabled)}
+            />
+            <span className="slider round"></span>
+          </label>
+        </div>
       </div>
-      
+
+
       <button onClick={handleStart}>Start</button>
     </div>
   );

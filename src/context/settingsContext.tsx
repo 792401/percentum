@@ -8,15 +8,11 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   const [min, setMin] = useState<number>(0);
   const [max, setMax] = useState<number>(100);
   const [playTime, setPlayTime] = useState<number>(1);
-  const [percentageType, setPercentageType] = useState<number[]>([5, 10]);
-
-  const togglePercentageType = (value: number) => {
-    setPercentageType((prev) =>
-      prev.includes(value)
-        ? prev.filter((p) => p !== value)
-        : [...prev, value]
-    );
-  };
+  const [additionEnabled, setAdditionEnabled] = useState<boolean>(false);
+  const [subtractionEnabled, setSubtractionEnabled] = useState<boolean>(false);
+  const [multiplicationEnabled, setMultiplicationEnabled] = useState<boolean>(false);
+  const [divisionEnabled, setDivisionEnabled] = useState<boolean>(false);
+  const [percentagesEnabled, setPercentagesEnabled] = useState<boolean>(false);
 
   return (
     <SettingsContext.Provider
@@ -27,8 +23,16 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         setMax,
         playTime,
         setPlayTime,
-        percentageType,
-        togglePercentageType,
+        additionEnabled,
+        setAdditionEnabled,
+        subtractionEnabled,
+        setSubtractionEnabled,
+        multiplicationEnabled,
+        setMultiplicationEnabled,
+        divisionEnabled,
+        setDivisionEnabled,
+        percentagesEnabled,
+        setPercentagesEnabled,
       }}
     >
       {children}
