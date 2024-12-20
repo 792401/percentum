@@ -1,12 +1,10 @@
 import React from 'react';
+import CenteredBlocksPage from '../components/CenteredBlocksPage';
 
 const Home: React.FC = () => {
-
-
   return (
-    <div className="App" >
-      <h1>Mental math</h1>
-
+    <div className="App">
+      <CenteredBlocksPage />
     </div>
   );
 };
