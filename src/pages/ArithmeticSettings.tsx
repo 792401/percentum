@@ -137,17 +137,17 @@ const Settings: React.FC = () => {
       </div>
 
 
-      <button 
-      onClick={handleStart}
-      disabled={
-        !(
-          additionEnabled ||
-          subtractionEnabled ||
-          multiplicationEnabled ||
-          divisionEnabled ||
-          percentagesEnabled
-        )
-      }
+      <button
+        onClick={handleStart}
+        disabled={
+          !(
+            additionEnabled ||
+            subtractionEnabled ||
+            multiplicationEnabled ||
+            divisionEnabled ||
+            percentagesEnabled
+          )
+        }
       >Start</button>
     </div>
   );

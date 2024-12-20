@@ -1,4 +1,4 @@
-import { Link,BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { Link, BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import './App.css';
 import React from 'react';
 
@@ -22,7 +22,7 @@ const App: React.FC = () => {
         <Router>
           {/* <Sidebar /> */}
           <div className="app">
-          <Link to="/"><h1>Σ</h1></Link>
+            <Link to="/"><h1>Σ</h1></Link>
             <Routes>
               {/* <Route path="/" element={<Home />} /> */}
               <Route path="/" element={<Home />} />

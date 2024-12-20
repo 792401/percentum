@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useSettings } from '../context/arithmeticSettingsContext';
 import { useHistory } from '../context/HistoryContext';
 
-const Percentage: React.FC = () => {
+const Arithmetic: React.FC = () => {
   const {
     min,
     max,
@@ -192,4 +192,4 @@ const Percentage: React.FC = () => {
   );
 };
 
-export default Percentage;
+export default Arithmetic;
