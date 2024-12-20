@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useSettings } from '../context/arithmeticSettingsContext';
+import { useSettings } from '../context/mArithmeticSettingsContext';
 import { useHistory } from '../context/HistoryContext';
 
 const Arithmetic: React.FC = () => {

@@ -10,7 +10,7 @@ import Home from './pages/Home';
 import Arithmetic from './pages/Arithmetic'
 import ArithmeticSettings from './pages/ArithmeticSettings'
 import SessionStats from './pages/SessionStats';
-import { ArithmeticSettingsProvider } from './context/arithmeticSettingsContext';
+import { ArithmeticSettingsProvider } from './context/mArithmeticSettingsContext';
 import { HistoryProvider } from './context/HistoryContext';
 import Memory from './pages/Memory';
 
