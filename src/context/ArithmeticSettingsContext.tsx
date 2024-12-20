@@ -4,7 +4,7 @@ const ArithmeticSettingsContext = createContext<any>(null);
 
 export const useSettings = () => useContext(ArithmeticSettingsContext);
 
-export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export const ArithmeticSettingsProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [min, setMin] = useState<number>(0);
   const [max, setMax] = useState<number>(100);
   const [playTime, setPlayTime] = useState<number>(1);

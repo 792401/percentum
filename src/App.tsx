@@ -10,14 +10,14 @@ import Home from './pages/Home';
 import Arithmetic from './pages/Arithmetic'
 import ArithmeticSettings from './pages/ArithmeticSettings'
 import SessionStats from './pages/SessionStats';
-import { SettingsProvider } from './context/arithmeticSettingsContext';
+import { ArithmeticSettingsProvider } from './context/arithmeticSettingsContext';
 import { HistoryProvider } from './context/HistoryContext';
 import Memory from './pages/Memory';
 
 const App: React.FC = () => {
 
   return (
-    <SettingsProvider>
+    <ArithmeticSettingsProvider>
       <HistoryProvider>
         <Router>
           {/* <Sidebar /> */}
@@ -35,7 +35,7 @@ const App: React.FC = () => {
           </div>
         </Router>
       </HistoryProvider>
-    </SettingsProvider>
+    </ArithmeticSettingsProvider>
   );
 };
 
