@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useSettings } from '../context/mArithmeticSettingsContext';
 import { useHistory } from '../context/HistoryContext';
 
-const Settings: React.FC = () => {
+const ArithmeticSettings: React.FC = () => {
   const { clearHistory } = useHistory();
   const {
     setMin,
@@ -153,4 +153,4 @@ const Settings: React.FC = () => {
   );
 };
 
-export default Settings;
+export default ArithmeticSettings;
