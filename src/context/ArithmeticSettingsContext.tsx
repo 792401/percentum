@@ -1,8 +1,8 @@
 import React, { createContext, useContext, useState } from 'react';
 
-const SettingsContext = createContext<any>(null);
+const ArithmeticSettingsContext = createContext<any>(null);
 
-export const useSettings = () => useContext(SettingsContext);
+export const useSettings = () => useContext(ArithmeticSettingsContext);
 
 export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [min, setMin] = useState<number>(0);
@@ -15,7 +15,7 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   const [percentagesEnabled, setPercentagesEnabled] = useState<boolean>(false);
 
   return (
-    <SettingsContext.Provider
+    <ArithmeticSettingsContext.Provider
       value={{
         min,
         max,
@@ -36,6 +36,6 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       }}
     >
       {children}
-    </SettingsContext.Provider>
+    </ArithmeticSettingsContext.Provider>
   );
 };

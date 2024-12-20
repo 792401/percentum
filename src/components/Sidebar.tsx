@@ -5,12 +5,11 @@ import './Sidebar.css';
 const Sidebar: React.FC = () => {
   return (
     <div className="sidebar">
-      {/* <Link to="/">Home</Link> */}
-      <ul>
-        <li><Link to="/">Practice</Link></li>
-        <li><Link to="/learn">Learn</Link></li>
+      <Link to="/">Home</Link>
+      {/* <ul>
+        <li><Link to="/arithmetic-settings">Arithmetic</Link></li>
         <li><Link to="/about">About</Link></li>      
-      </ul>
+      </ul> */}
     </div>
   );
 };

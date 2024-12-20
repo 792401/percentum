@@ -1,34 +1,39 @@
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { Link,BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import './App.css';
 import React from 'react';
-import './App.css';
-import Percentage from './pages/Percentage';
+
 import About from './pages/About';
 // import Sidebar from './components/Sidebar';
 
 
-import Settings from './pages/Settings';
+import Home from './pages/Home';
+import Arithmetic from './pages/Arithmetic'
+import ArithmeticSettings from './pages/ArithmeticSettings'
 import SessionStats from './pages/SessionStats';
-import { SettingsProvider } from './context/settingsContext';
-import { HistoryProvider } from './context/HistoryContext'; 
+import { SettingsProvider } from './context/arithmeticSettingsContext';
+import { HistoryProvider } from './context/HistoryContext';
+import Memory from './pages/Memory';
 
 const App: React.FC = () => {
 
   return (
     <SettingsProvider>
-       <HistoryProvider>
-      <Router>
-        {/* <Sidebar /> */}
-        <div className="app">
-          <Routes>
-            {/* <Route path="/" element={<Home />} /> */}
-            <Route path="/" element={<Settings />} />
-            <Route path="/stats" element={<SessionStats />} />
-            <Route path="/percentages" element={<Percentage />} />
-            <Route path="/about" element={<About />} />
-          </Routes>
-        </div>
-      </Router>
+      <HistoryProvider>
+        <Router>
+          {/* <Sidebar /> */}
+          <div className="app">
+          <Link to="/"><h1>Σ</h1></Link>
+            <Routes>
+              {/* <Route path="/" element={<Home />} /> */}
+              <Route path="/" element={<Home />} />
+              <Route path="/stats" element={<SessionStats />} />
+              <Route path="/arithmetic-settings" element={<ArithmeticSettings />} />
+              <Route path="/arithmetic" element={<Arithmetic />} />
+              <Route path="/number-recall" element={<Memory />} />
+              <Route path="/about" element={<About />} />
+            </Routes>
+          </div>
+        </Router>
       </HistoryProvider>
     </SettingsProvider>
   );
