@@ -1,49 +1,64 @@
 .centered-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100;
-    background: linear-gradient(135deg, #1d1f27, #32354b);
-    color: #f0f0f0;
-    border-radius: 12px;
-    padding: 2rem;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-  }
-  
-  h1 {
-    font-size: 3.2rem;
-    font-weight: 700;
-    margin-bottom: 2rem;
-    color: #61dafb;
-  }
-  
-  .options-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1.5rem;
-    width: 100%;
-    max-width: 800px;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh; /* Full viewport height */
+  background: linear-gradient(135deg, #1d1f27, #32354b);
+  color: #f0f0f0;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  box-sizing: border-box;
+}
+
+h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  color: #61dafb;
+  text-align: center;
+}
+
+.options-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; /* Centers items horizontally */
+  gap: 1.5rem; /* Equal spacing between all items */
+  width: 100%;
+  max-width: 90%; /* Restrict max width */
+  box-sizing: border-box;
+}
+
+.option {
+  background-color: #3a3d54;
+  flex: 1 1 calc(25% - 1.5rem); /* Flexible width with spacing accounted */
+  max-width: 200px; /* Prevent items from becoming too wide */
+  min-width: 150px; /* Prevent items from becoming too narrow */
+  padding: 1rem;
+  text-align: center;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: transform 0.3s, background-color 0.3s;
+  cursor: pointer;
+}
+
+.option a {
+  text-decoration: none;
+  color: #eee;
+  word-wrap: break-word; /* Prevent long words from overflowing */
+}
+
+.option:hover {
+  background-color: #646cff;
+  transform: scale(1.05);
+}
+
+@media (min-width: 768px) {
   .option {
-    background-color: #3a3d54;
-    padding: 1.5rem;
-    text-align: center;
-    border-radius: 8px;
-    font-size: 1.2rem;
-    font-weight: 500;
-    transition: transform 0.3s, background-color 0.3s;
-    cursor: pointer;
+      flex: 1 1 calc(20% - 1.5rem); /* Adjust for larger screens */
+      padding: 1.5rem;
+      font-size: 1.2rem;
   }
-  
-  .option a {
-    text-decoration: none;
-    color: #eee;
-  }
-  
-  .option:hover {
-    background-color: #646cff;
-    transform: scale(1.05);
-  }
-  
+}
