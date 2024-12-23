@@ -3,7 +3,7 @@ import CenteredBlocksPage from '../components/CenteredBlocksPage';
 
 const Home: React.FC = () => {
   return (
-    <div className="App">
+    <div className="app">
       <CenteredBlocksPage />
     </div>
   );

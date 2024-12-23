@@ -1,28 +1,27 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useSettings } from '../context/mArithmeticSettingsContext';
+import { useSettings } from '../context/PercentageSettingsContext';
 import { useHistory } from '../context/HistoryContext';
 
-const ArithmeticSettings: React.FC = () => {
+const PercentageSettings: React.FC = () => {
   const { clearHistory } = useHistory();
   const {
     setMin,
     setMax,
     setPlayTime,
-    additionEnabled,
-    setAdditionEnabled,
-    subtractionEnabled,
-    setSubtractionEnabled,
-    multiplicationEnabled,
-    setMultiplicationEnabled,
-    divisionEnabled,
-    setDivisionEnabled,
+    percentagesEnabled,
+    setPercentagesEnabled,
+    percentageIncreaseEnabled,
+    setPercentageIncreaseEnabled,
+    percentageDecreaseEnabled,
+    setPercentageDecreaseEnabled,
     includeMultiplesOf3,
     setIncludeMultiplesOf3,
     includeMultiplesOf5,
     setIncludeMultiplesOf5,
     includeMultiplesOf10,
     setIncludeMultiplesOf10,
+
 
   } = useSettings();
   const [numberRange, setNumberRange] = useState<{ min: string; max: string }>({ min: '0', max: '100' });
@@ -34,7 +33,7 @@ const ArithmeticSettings: React.FC = () => {
     setMin(parseInt(numberRange.min));
     setMax(parseInt(numberRange.max));
     setPlayTime(parseInt(selectedPlayTime));
-    navigate('/arithmetic');
+    navigate('/percentage');
   };
 
   const handleRangeChange = (side: 'min' | 'max', value: string) => {
@@ -81,8 +80,7 @@ const ArithmeticSettings: React.FC = () => {
           <option value="0">No pressure 🐢</option>
         </select>
       </div>
-      <div>
-  <div className="switch-container">
+      <div className="switch-container">
     <span className="switch-label">Multiples of 3</span>
     <label className="switch">
       <input
@@ -115,53 +113,43 @@ const ArithmeticSettings: React.FC = () => {
       <span className="slider round"></span>
     </label>
   </div>
-</div>
+
       <div>
         {/* <label>Operations</label> */}
         <div className="switch-container">
-          <span className="switch-label">Addition</span>
+          <span className="switch-label">Percentage of</span>
           <label className="switch">
             <input
               type="checkbox"
-              checked={additionEnabled}
-              onChange={() => setAdditionEnabled(!additionEnabled)}
+              checked={percentagesEnabled}
+              onChange={() => setPercentagesEnabled(!percentagesEnabled)}
             />
             <span className="slider round"></span>
           </label>
         </div>
         <div className="switch-container">
-          <span className="switch-label">Subtraction</span>
+          <span className="switch-label">Percentage Increase</span>
           <label className="switch">
             <input
               type="checkbox"
-              checked={subtractionEnabled}
-              onChange={() => setSubtractionEnabled(!subtractionEnabled)}
+              checked={percentageIncreaseEnabled}
+              onChange={() => setPercentageIncreaseEnabled(!percentageIncreaseEnabled)}
             />
             <span className="slider round"></span>
           </label>
         </div>
         <div className="switch-container">
-          <span className="switch-label">Multiplication</span>
+          <span className="switch-label">Percentage Decrease</span>
           <label className="switch">
             <input
               type="checkbox"
-              checked={multiplicationEnabled}
-              onChange={() => setMultiplicationEnabled(!multiplicationEnabled)}
+              checked={percentageDecreaseEnabled}
+              onChange={() => setPercentageDecreaseEnabled(!percentageDecreaseEnabled)}
             />
             <span className="slider round"></span>
           </label>
         </div>
-        <div className="switch-container">
-          <span className="switch-label">Division</span>
-          <label className="switch">
-            <input
-              type="checkbox"
-              checked={divisionEnabled}
-              onChange={() => setDivisionEnabled(!divisionEnabled)}
-            />
-            <span className="slider round"></span>
-          </label>
-        </div>
+        
       </div>
 
 
@@ -169,10 +157,9 @@ const ArithmeticSettings: React.FC = () => {
         onClick={handleStart}
         disabled={
           !(
-            additionEnabled ||
-            subtractionEnabled ||
-            multiplicationEnabled ||
-            divisionEnabled
+            percentagesEnabled ||
+            percentageIncreaseEnabled ||
+            percentageDecreaseEnabled 
           )
         }
       >Start</button>
@@ -180,4 +167,4 @@ const ArithmeticSettings: React.FC = () => {
   );
 };
 
-export default ArithmeticSettings;
+export default PercentageSettings;

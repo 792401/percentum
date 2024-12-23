@@ -110,6 +110,7 @@ const Memory: React.FC = () => {
                         <div className="input-section">
                             <h2>Enter the number:</h2>
                             <input
+                                autoFocus={gameState === 'userInput'}
                                 type="text"
                                 value={userInput}
                                 onChange={handleInputChange}

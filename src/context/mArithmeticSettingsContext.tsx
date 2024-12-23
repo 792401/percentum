@@ -12,7 +12,9 @@ export const ArithmeticSettingsProvider: React.FC<{ children: React.ReactNode }>
   const [subtractionEnabled, setSubtractionEnabled] = useState<boolean>(false);
   const [multiplicationEnabled, setMultiplicationEnabled] = useState<boolean>(false);
   const [divisionEnabled, setDivisionEnabled] = useState<boolean>(false);
-  const [percentagesEnabled, setPercentagesEnabled] = useState<boolean>(false);
+  const [includeMultiplesOf3, setIncludeMultiplesOf3] = useState<boolean>(false);
+  const [includeMultiplesOf5, setIncludeMultiplesOf5] = useState<boolean>(false);
+  const [includeMultiplesOf10, setIncludeMultiplesOf10] = useState<boolean>(false);
 
   return (
     <ArithmeticSettingsContext.Provider
@@ -31,8 +33,12 @@ export const ArithmeticSettingsProvider: React.FC<{ children: React.ReactNode }>
         setMultiplicationEnabled,
         divisionEnabled,
         setDivisionEnabled,
-        percentagesEnabled,
-        setPercentagesEnabled,
+        includeMultiplesOf3,
+        setIncludeMultiplesOf3,
+        includeMultiplesOf5,
+        setIncludeMultiplesOf5,
+        includeMultiplesOf10,
+        setIncludeMultiplesOf10,
       }}
     >
       {children}

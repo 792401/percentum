@@ -8,15 +8,20 @@ const CenteredBlocksPage: React.FC = () => {
     <div >
       <h1>Select game</h1>
       <div className="options-container">
-      <Link to="/arithmetic-settings">
-        <div className="option">
-          Mental Arithmetic
-        </div>
+        <Link to="/arithmetic-settings">
+          <div className="option">
+            Mental Arithmetic
+          </div>
         </Link>
-       <Link to="/number-recall">
-        <div className="option">
-          Memory Game
-        </div>
+        <Link to="/percentage-settings">
+          <div className="option">
+            Percentages
+          </div>
+        </Link>
+        <Link to="/number-recall">
+          <div className="option">
+            Memory Game
+          </div>
         </Link>
       </div>
     </div>

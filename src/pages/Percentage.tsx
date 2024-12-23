@@ -1,20 +1,20 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useSettings } from '../context/mArithmeticSettingsContext';
+import { useSettings } from '../context/PercentageSettingsContext';
 import { useHistory } from '../context/HistoryContext';
 
-const Arithmetic: React.FC = () => {
+const Percentage: React.FC = () => {
   const {
     min,
     max,
     playTime,
-    additionEnabled,
-    subtractionEnabled,
-    multiplicationEnabled,
-    divisionEnabled,
+    percentagesEnabled,
+    percentageIncreaseEnabled,
+    percentageDecreaseEnabled,
     includeMultiplesOf3,
     includeMultiplesOf5,
     includeMultiplesOf10
+
   } = useSettings();
   const { addHistoryItem } = useHistory();
   const navigate = useNavigate();
@@ -29,70 +29,74 @@ const Arithmetic: React.FC = () => {
 
   const enabledOperations = useMemo(() => {
     const ops = [];
-    if (additionEnabled) ops.push('addition');
-    if (subtractionEnabled) ops.push('subtraction');
-    if (multiplicationEnabled) ops.push('multiplication');
-    if (divisionEnabled) ops.push('division');
+    if (percentagesEnabled) ops.push('percentage');
+    if (percentageIncreaseEnabled) ops.push('percentageIncrease');
+    if (percentageDecreaseEnabled) ops.push('percentageDecrease');
     return ops;
-  }, [additionEnabled, subtractionEnabled, multiplicationEnabled, divisionEnabled]);
-
+  }, [percentagesEnabled, percentageIncreaseEnabled, percentageDecreaseEnabled]);
 
   const generateProblem = useCallback(() => {
+    if (enabledOperations.length === 0) {
+      setCurrentProblem({ question: 'No operations enabled', correctAnswer: 0 });
+      return;
+    }
   
     const operation = enabledOperations[Math.floor(Math.random() * enabledOperations.length)];
   
     let operand1: number;
-    let operand2: number;
+    let percentage: number;
     let question = '';
     let correctAnswer = 0;
     let validProblem = false;
   
     while (!validProblem) {
       operand1 = Math.floor(Math.random() * (max - min + 1)) + min;
-      operand2 = Math.floor(Math.random() * (max - min + 1)) + min;
+      percentage = Math.floor(Math.random() * 100) + 1;
   
-      // Apply the filters
+      // Apply the filters for multiples
       if (includeMultiplesOf3 && operand1 % 3 !== 0) continue;
       if (includeMultiplesOf5 && operand1 % 5 !== 0) continue;
       if (includeMultiplesOf10 && operand1 % 10 !== 0) continue;
   
-      if (includeMultiplesOf3 && operand2 % 3 !== 0) continue;
-      if (includeMultiplesOf5 && operand2 % 5 !== 0) continue;
-      if (includeMultiplesOf10 && operand2 % 10 !== 0) continue;
+      if (includeMultiplesOf3 && percentage % 3 !== 0) continue;
+      if (includeMultiplesOf5 && percentage % 5 !== 0) continue;
+      if (includeMultiplesOf10 && percentage % 10 !== 0) continue;
   
       switch (operation) {
-        case 'addition':
-          correctAnswer = operand1 + operand2;
-          validProblem = correctAnswer >= min && correctAnswer <= max;
+        case 'percentage': {
+          correctAnswer = parseFloat(((percentage / 100) * operand1).toFixed(2));
+          validProblem =
+            correctAnswer >= min &&
+            correctAnswer <= max &&
+            correctAnswer > 0;
           if (validProblem) {
-            question = `${operand1} + ${operand2}`;
+            question = `${percentage}% of ${operand1}`;
           }
           break;
-        case 'subtraction':
-          if (operand1 < operand2) {
-            [operand1, operand2] = [operand2, operand1];
-          }
-          correctAnswer = operand1 - operand2;
-          validProblem = correctAnswer >= min && correctAnswer <= max;
+        }
+        case 'percentageIncrease': {
+          const increase = parseFloat(((percentage / 100) * operand1).toFixed(2));
+          correctAnswer = parseFloat((operand1 + increase).toFixed(2));
+          validProblem =
+            correctAnswer >= min &&
+            correctAnswer <= max;
           if (validProblem) {
-            question = `${operand1} - ${operand2}`;
+            question = `${percentage}% increase of ${operand1}`;
           }
           break;
-        case 'multiplication':
-          correctAnswer = operand1 * operand2;
-          validProblem = correctAnswer >= min && correctAnswer <= max;
-          if (validProblem && correctAnswer > 0) {
-            question = `${operand1} × ${operand2}`;
+        }
+        case 'percentageDecrease': {
+          const decrease = parseFloat(((percentage / 100) * operand1).toFixed(2));
+          correctAnswer = parseFloat((operand1 - decrease).toFixed(2));
+          validProblem =
+            correctAnswer >= min &&
+            correctAnswer <= max &&
+            correctAnswer > 0;
+          if (validProblem) {
+            question = `${percentage}% decrease of ${operand1}`;
           }
           break;
-        case 'division':
-          if (operand2 === 0 || operand1 % operand2 !== 0) continue;
-          correctAnswer = operand1 / operand2;
-          validProblem = correctAnswer >= min && correctAnswer <= max;
-          if (validProblem && correctAnswer > 0) {
-            question = `${operand1} ÷ ${operand2}`;
-          }
-          break;
+        }
         default:
           break;
       }
@@ -101,7 +105,7 @@ const Arithmetic: React.FC = () => {
     setCurrentProblem({ question, correctAnswer });
     setInputData({ userAnswer: '', inputClass: '' });
   }, [enabledOperations, min, max, includeMultiplesOf3, includeMultiplesOf5, includeMultiplesOf10]);
-  
+    
 
   const checkAnswer = useCallback(
     (userAnswer: string) => {
@@ -133,14 +137,14 @@ const Arithmetic: React.FC = () => {
 
     if (/^\d*\.?\d*$/.test(value) || value === '') {
       setInputData((prev) => ({ ...prev, userAnswer: value, inputClass: '' }));
+
     }
   };
-
-    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-      if (e.key === 'Enter' && inputData.userAnswer !== '') {
-        checkAnswer(inputData.userAnswer);
-      }
-    };
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter' && inputData.userAnswer !== '') {
+      checkAnswer(inputData.userAnswer);
+    }
+  };
 
   const handleStop = useCallback(() => {
     setIsGameOver(true);
@@ -190,4 +194,4 @@ const Arithmetic: React.FC = () => {
   );
 };
 
-export default Arithmetic;
+export default Percentage;
