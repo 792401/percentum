@@ -15,7 +15,6 @@ import SessionStats from './pages/SessionStats';
 import { ArithmeticSettingsProvider } from './context/mArithmeticSettingsContext';
 import { HistoryProvider } from './context/HistoryContext';
 import Memory from './pages/Memory';
-import GeometryPuzzle from './pages/Geometry';
 import { PercentageSettingsProvider } from './context/PercentageSettingsContext';
 
 const App: React.FC = () => {
@@ -36,7 +35,6 @@ const App: React.FC = () => {
                 <Route path="/percentage" element={<Percentage />} />
                 <Route path="/arithmetic-settings" element={<ArithmeticSettings />} />
                 <Route path="/arithmetic" element={<Arithmetic />} />
-                <Route path="/geometry" element={<GeometryPuzzle />} />
                 <Route path="/number-recall" element={<Memory />} />
                 <Route path="/about" element={<About />} />
               </Routes>
